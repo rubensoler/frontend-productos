@@ -5,7 +5,7 @@ import Modal from "./components/Modal"; // Reusamos el modal
 import "./App.css";
 
 
-const API_URL = import.meta.env.VITE_API_URL/products;
+const API_URL = import.meta.env.VITE_API_URL;
 // const API_URL = "http://127.0.0.1:8000/products";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
     // Obtener productos desde la API
     const fetchProducts = async () => {
         try {
-            const response = await axios.get(API_URL);
+            const response = await axios.get(`${API_URL}/products`);
             setProducts(response.data);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -51,13 +51,13 @@ function App() {
     const saveProduct = async () => {
         try {
             if (isEditing) {
-                await axios.put(`${API_URL}/${productData.id}`, {
+                await axios.put(`${API_URL}/products/${productData.id}`, {
                     name: productData.name,
                     price: parseFloat(productData.price),
                     image_url: productData.image_url
                 });
             } else {
-                await axios.post(API_URL, {
+                await axios.post(`${API_URL}/products`, {
                     name: productData.name,
                     price: parseFloat(productData.price),
                     image_url: productData.image_url
